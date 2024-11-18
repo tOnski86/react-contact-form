@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from './Button';
 import FormInput from './FormInput';
 import Error from './Error';
+import Success from './Success';
 
 const VALID_NAME = str => /^[a-z ,.'-]+$/i.test(str);
 const VALID_EMAIL = str => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str);
@@ -57,7 +58,7 @@ function Form({ title }) {
   }
 
   function handleInput(e) {
-    setInput({ ...input, [e.target.id]: e.target.value });
+    setInput({ ...input, [e.target.name]: e.target.value });
   }
 
   function handleSubmit(e) {
@@ -77,16 +78,16 @@ function Form({ title }) {
         message: '',
         consent: false,
       });
-      alert('Success!');
     }
-  }, [errors, submit, input]);
+  }, [errors, submit]);
 
   return (
     <form
       onSubmit={handleSubmit}
-      className='grid bg-white grid-cols-1 sm:grid-cols-2 mx-4 my-8 p-6 sm:p-8 rounded-2xl gap-6 md:min-w-[800px] shadow-sm'
+      className='grid bg-white grid-cols-1 sm:grid-cols-2 mx-4 my-8 p-6 sm:p-8 rounded-2xl gap-6 md:min-w-[800px] shadow-sm relative'
     >
-      <h1 className='sm:col-span-2 text-3xl font-bold'>{title}</h1>
+      {success && <Success />}
+      <h1 className='sm:col-span-2 text-3xl font-bold '>{title}</h1>
 
       {/* first name */}
       <div>
@@ -98,6 +99,7 @@ function Form({ title }) {
             onChange={e => handleInput(e)}
             value={input.first}
             type='text'
+            name='first'
             id='first'
           />
           {errors.first && <Error>{errors.first}</Error>}
@@ -114,6 +116,7 @@ function Form({ title }) {
             onChange={e => handleInput(e)}
             value={input.last}
             type='text'
+            name='last'
             id='last'
           />
           {errors.last && <Error>{errors.last}</Error>}
@@ -130,6 +133,7 @@ function Form({ title }) {
             onChange={e => handleInput(e)}
             value={input.email}
             type='text'
+            name='email'
             id='email'
           />
           {errors.email && <Error>{errors.email}</Error>}
@@ -139,7 +143,7 @@ function Form({ title }) {
       {/* query type */}
       <div className='sm:col-span-2'>
         <div className='grid sm:col-span-2 gap-4'>
-          <label htmlFor='query'>
+          <label>
             Query Type <span className='text-green-600'>*</span>
           </label>
 
@@ -151,7 +155,7 @@ function Form({ title }) {
                 value='general'
                 type='radio'
                 name='query'
-                id='query'
+                id='general'
                 className='accent-green-600 transition-all cursor-pointer focus:outline-green-600 outline-1 hover:cursor-pointer'
               />
               <label htmlFor='general' className='hover:cursor-pointer'>
@@ -166,7 +170,7 @@ function Form({ title }) {
                 value='support'
                 type='radio'
                 name='query'
-                id='query'
+                id='support'
                 className='accent-green-600 transition-all cursor-pointer focus:outline-green-600 outline-1 hover:cursor-pointer'
               />
               <label htmlFor='support' className='hover:cursor-pointer'>
