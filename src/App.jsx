@@ -1,5 +1,11 @@
+import Form from './components/Form';
+
 function App() {
-  return <h1 className='text-red'>Hello React</h1>;
+  return (
+    <div className='bg-white grid grid-cols-1 sm:grid-cols-2'>
+      <Form title='Contact Us' />
+    </div>
+  );
 }
 
 export default App;
