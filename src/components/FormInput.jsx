@@ -8,7 +8,7 @@ function FormInput({ ...props }) {
       name={name}
       id={id}
       value={value}
-      className='border border-grey-500 rounded-md px-5 py-3'
+      className='border border-grey-500 rounded-lg px-5 py-3 hover:border-green-600 transition-all cursor-pointer focus:outline-green-600 outline-1'
     />
   );
 }
